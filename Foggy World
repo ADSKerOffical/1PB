@@ -1,0 +1,74 @@
+Workspace.Part:Destroy()
+Workspace.Baseplate:Destroy()
+
+game.Players.LocalPlayer.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, false)
+game.Players.LocalPlayer.CameraMode = Enum.CameraMode.LockFirstPerson
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 4, 0)
+game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Running").SoundId = "rbxassetid://0"
+
+local Baseplate = Instance.new("Part", workspace)
+Baseplate.Color = Color3.new(0, 120, 0)
+Baseplate.Material = "LeafyGrass"
+Baseplate.Name = "BSplate"
+Baseplate.Size = Vector3.new(2048, 20, 2048)
+Baseplate.Position = Vector3.new(0, -10, 0)
+Baseplate.Anchored = true
+
+local sky = Instance.new("Sky", game.Lighting)
+sky.CelestialBodiesShown = false
+
+local atmosphere = Instance.new("Atmosphere", game.Lighting)
+atmosphere.Haze = 100
+atmosphere.Color = Color3.fromRGB(255, 255, 255)
+atmosphere.Density = 0.9 -- 0.7
+
+local house = game:GetObjects("rbxassetid://14913154056")[1]
+house.Parent = workspace
+house:PivotTo(CFrame.new(0, 30, 0))
+
+local wind = Instance.new("Sound", game.Workspace)
+wind.SoundId = "rbxassetid://167123203"
+wind.Volume = 0.5
+wind.PlaybackSpeed = 1
+wind.Looped = true
+wind:Play()
+
+local ambient = Instance.new("Sound", workspace)
+ambient.SoundId = "rbxassetid://9125351901"
+ambient.Looped = true
+ambient.PlaybackSpeed = 1
+ambient.Volume = 0
+
+local box = Instance.new("Part", workspace)
+box.Material = "Wood"
+box.Position = Vector3.new(9, 23, 0)
+box.Size = Vector3.new(3.33, 3.33, 3.33)
+
+local dy = true
+ local checkpart = Instance.new("Part", workspace)
+ checkpart.Position = Vector3.new(-11, 7, -25)
+ checkpart.Size = Vector3.new(3, 3, 1)
+ checkpart.Name = "CPart"
+ checkpart.Transparency = 1
+ checkpart.CanCollide = false
+ checkpart.Anchored = true
+ 
+ checkpart.Touched:Connect(function(hit)
+  if dy == false then return end
+   if hit.Parent == game.Players.LocalPlayer.Character then
+dy = false
+
+local partTweenn2 = game:GetService("TweenService"):Create(atmosphere, TweenInfo.new(1.5, Enum.EasingStyle.Sine), {
+        Density = 0.8
+    })
+    partTweenn2:Play()
+
+task.delay(3, function()
+  ambient:Play()
+  local partTweenn2 = game:GetService("TweenService"):Create(ambient, TweenInfo.new(1.5, Enum.EasingStyle.Sine), {
+        Volume = 1.5
+    })
+    partTweenn2:Play()
+end)
+   end
+ end)
