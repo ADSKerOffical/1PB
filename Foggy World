@@ -44,6 +44,59 @@ box.Material = "Wood"
 box.Position = Vector3.new(9, 23, 0)
 box.Size = Vector3.new(3.33, 3.33, 3.33)
 
+local prompt = Instance.new("ProximityPrompt", box)
+prompt.ActionText = "Unpack"
+
+local ah = 0
+prompt.Triggered:Connect(function(player)
+ ah += 1
+  if ah == 1 then
+local compas = Instance.new("Tool", player.Backpack)
+compas.Name = "Compass"
+task.spawn(function()
+ repeat task.wait(0.1)
+compas.ToolTip = "Find your way around in this thick fog: " .. tostring(math.floor(player.Character.HumanoidRootPart.CFrame.X)) .. ", " .. tostring(math.floor(player.Character.HumanoidRootPart.CFrame.Y)) .. ", " .. tostring(math.floor(player.Character.HumanoidRootPart.CFrame.Z))
+ until not compas or not player or compas.Parent == nil
+end)
+
+local handle = Instance.new("Part", compas)
+handle.Name = "Handle"
+handle.Color = Color3.new(0.3, 0.3, 0.3)
+
+local mesh = Instance.new("SpecialMesh", handle)
+mesh.MeshId = "rbxassetid://3532235172"
+mesh.Scale = Vector3.new(0.05, 0.05, 0.05)
+  elseif ah == 2 then
+local torch = Instance.new("Tool", player.Backpack)
+torch.Name = "Torch"
+torch.ToolTip = "You can see better in fog"
+
+local handle = Instance.new("Part", torch)
+handle.Name = "Handle"
+handle.Color = Color3.new(0, 0, 0)
+handle.Size = Vector3.new(1, 3, 1)
+
+local fire = Instance.new("Fire", handle)
+fire.Size = 2
+
+torch.Equipped:Connect(function()
+  local partTweenn2 = game:GetService("TweenService"):Create(atmosphere, TweenInfo.new(0.7, Enum.EasingStyle.Linear), {
+        Density = 0.65
+    })
+    partTweenn2:Play()
+end)
+
+torch.Unequipped:Connect(function()
+  local partTweenn2 = game:GetService("TweenService"):Create(atmosphere, TweenInfo.new(0.7, Enum.EasingStyle.Linear), {
+        Density = 0.7
+    })
+    partTweenn2:Play()
+end)
+  elseif ah == 3 then
+prompt:Destroy()
+  end
+end)
+
 local dy = true
  local checkpart = Instance.new("Part", workspace)
  checkpart.Position = Vector3.new(-11, 7, -25)
@@ -58,6 +111,12 @@ local dy = true
    if hit.Parent == game.Players.LocalPlayer.Character then
 dy = false
 
+local partTweenn2 = game:GetService("TweenService"):Create(wind, TweenInfo.new(1, Enum.EasingStyle.Linear), {
+        Volume = 0.5,
+        PlaybackSpeed = 0.75
+    })
+    partTweenn2:Play()
+    
 local partTweenn2 = game:GetService("TweenService"):Create(atmosphere, TweenInfo.new(1.5, Enum.EasingStyle.Sine), {
         Density = 0.8
     })
@@ -72,3 +131,65 @@ task.delay(3, function()
 end)
    end
  end)
+ 
+ local stairs = game:GetObjects("rbxassetid://1546561127")[1]
+stairs:PivotTo(CFrame.new(-17, 10, -235))
+
+for i = 1, 6 do
+  local stairs2 = stairs:Clone()
+  stairs2.Parent = workspace
+  stairs:PivotTo(CFrame.new(-17, 10 + 20 * i, -235))
+end
+
+local teleporter = Instance.new("Part", workspace)
+teleporter.Anchored = true
+teleporter.CanCollide = false
+teleporter.Position = Vector3.new(-15, 95, -233)
+teleporter.Transparency = 1
+
+local gyh = true
+teleporter.Touched:Connect(function(hit)
+ if gyh == false then return end
+  if hit.Parent == game.Players.LocalPlayer.Character then
+gyh = false
+
+game.Players.LocalPlayer.OnTeleport:Connect(function()
+  queue_on_teleport('print("Soon")')
+end)
+game:GetService("TeleportService"):Teleport(game.PlaceId)
+  end
+end)
+
+local Screen = Instance.new("ScreenGui", gethui())
+Screen.ResetOnSpawn = true
+Screen.Enabled = true
+Screen.IgnoreGuiInset = true
+Screen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+Screen.DisplayOrder = -25
+game.Debris:AddItem(Screen, 10)
+
+local frame = Instance.new("Frame", Screen)
+frame.Position = UDim2.new(0, 0, 0, 0)
+frame.Size = UDim2.new(1, 0, 1, 0)
+frame.BackgroundColor3 = Color3.new(0, 0, 0)
+frame.BorderSizePixel = 0
+frame.BackgroundTransparency = 0
+
+local text = Instance.new("TextLabel", frame)
+text.Text = "Foggy World"
+text.TextColor3 = Color3.new(1, 1, 1)
+text.TextScaled = true
+text.BackgroundTransparency = 1
+text.Size = UDim2.new(0, 200, 0, 50)
+text.Position = UDim2.new(0.5, -100, 0.5, -25)
+
+task.wait(3)
+
+local partTweenn2 = game:GetService("TweenService"):Create(frame, TweenInfo.new(2, Enum.EasingStyle.Linear), {
+    BackgroundTransparency = 1
+})
+ partTweenn2:Play()
+local partTweenn2 = game:GetService("TweenService"):Create(text, TweenInfo.new(2, Enum.EasingStyle.Linear), {
+        TextTransparency = 1
+    })
+    partTweenn2:Play()
