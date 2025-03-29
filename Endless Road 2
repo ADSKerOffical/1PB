@@ -1,0 +1,190 @@
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 100010, 0)
+game.Players.LocalPlayer.Character.Humanoid:SetStateEnabled("Dead", false)
+
+sky = Instance.new("Sky", game.Lighting)
+sky.StarCount = 0
+
+local check1 = true
+local check2 = true
+local check3 = true
+
+sound1 = Instance.new("Sound", workspace)
+sound1.Volume = 2
+sound1.Looped = true
+sound1.SoundId = "rbxassetid://109550779401749"
+sound1.PlaybackSpeed = 1
+sound1.Pitch = 0.7
+sound1:Play()
+
+sound2 = Instance.new("Sound", workspace)
+sound2.Looped = true
+sound2.Volume = 0.65
+sound2.SoundId = "rbxassetid://167123203"
+sound2.PlaybackSpeed = 1
+sound2.Pitch = 0.95
+sound2:Play()
+
+atmosphere = Instance.new("Atmosphere", game.Lighting)
+atmosphere.Haze = 20
+atmosphere.Color = Color3.new(1, 1, 1)
+atmosphere.Density = 0.3
+
+task.spawn(function()
+  while task.wait() do
+    if game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z > 1024 or game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z < -1024 then
+      game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X, 100005, 0)
+     elseif game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Y <= 99990 then
+      game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X, 100005, game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z)
+    end
+  end
+end)
+
+local function addobj(pos)
+  ooj = Instance.new("Part", workspace)
+  ooj.Name = "Landscape"
+  ooj.Material = "Grass"
+  ooj.Color = Color3.new(0, 0.4, 0)
+  ooj.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0)
+  ooj.Size = Vector3.new(math.random(1, 25), math.random(1, 25), math.random(1, 25))
+  ooj.Position = pos
+end
+
+part = Instance.new("Part")
+part.Name = "Baseplate"
+part.Size = Vector3.new(50000, 5, 50000)
+part.Transparency = 0
+part.Anchored = true
+part.Position = Vector3.new(0, 99999, 0)
+part.BrickColor = BrickColor.new(Color3.new(0, 0.35, 0))
+part.Material = Enum.Material.Grass
+part.Parent = game.Workspace
+
+part2 = part:Clone()
+part2.Parent = workspace
+part2.Position = Vector3.new(-2000, 99999, 0)
+
+local whoit = Instance.new("Part", workspace)
+whoit.Name = "WHOIM" .. string.rep("?", 100)
+whoit.Material = "Neon"
+whoit.Size = Vector3.new(14, 14, 14)
+whoit.Position = Vector3.new(-542, 100014, 108)
+whoit.Color = Color3.new(1, 1, 1)
+whoit.CustomPhysicalProperties = PhysicalProperties.new(100, 100, 0)
+
+part3 = part:Clone()
+part3.Parent = workspace
+part3.Position = Vector3.new(-4000, 99999, 0)
+
+part3.Touched:Connect(function(hit)
+  if check1 == false then return end
+   check1 = false
+   atmosphere.Density = 0.3
+   atmosphere.Color = Color3.new(0, 0, 0)
+   sound1:Destroy()
+   sound2:Destroy()
+   
+   sound3 = Instance.new("Sound", workspace)
+   sound3.SoundId = "rbxassetid://88456225545062"
+   sound3.Volume = 1
+   sound3.Looped = true
+   sound3.PlaybackSpeed = 1
+   sound3.Pitch = 0.9
+   sound3:Play()
+   
+   game:GetService("GuiService").MenuOpened:Connect(function()
+     game.CoreGui.RobloxGui.Enabled = false
+   end)
+   
+   game:GetService("GuiService").MenuClosed:Connect(function()
+     game.CoreGui.RobloxGui.Enabled = true
+   end)
+   
+   local hook; hook = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
+    if self == game.Players and table.find({"remove", "destroy", "resetlocalplayer"}, getnamecallmethod():lower()) then
+      return 
+    elseif self == game.Players.LocalPlayer and table.find({"remove", "kick", "destroy"}, getnamecallmethod():lower()) then
+      return 
+    end
+     return hook(self, ...)
+   end))
+   
+   task.spawn(function()
+     while task.wait() do
+       if game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X >= -2900 then
+          game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2905, 100005, 0)
+       end
+     end
+   end)
+   
+   sky.MoonTextureId = "rbxassetid://7960656043"
+   sky.MoonAngularSize = 100
+   game.Lighting.TimeOfDay = "20:00:00"
+   
+   part4 = part:Clone()
+   part4.Parent = workspace
+   part4.Material = "CorrodedMetal"
+   part4.Position = Vector3.new(-6000, 99999, 0)
+   
+   dirt = Instance.new("Decal", part4)
+   dirt.Texture = "rbxassetid://219255691"
+   dirt.Face = Enum.NormalId.Top
+   
+   part5 = part:Clone()
+   part5.Parent = workspace
+   part5.Material = "CorrodedMetal"
+   part5.Position = Vector3.new(-8000, 99999, 0)
+   
+   part5.Touched:Connect(function(hit)
+     if check2 == false then return end
+      check2 = false
+      
+ sound3:Destroy()
+ sound4 = Instance.new("Sound", game.Workspace)
+ sound4.Volume = 0.8
+ sound4.SoundId = "rbxassetid://4963657716"
+ sound4.PlaybackSpeed = 1
+ sound4.Pitch = 0.8
+ sound4.Looped = true
+ sound4:Play()
+ 
+ sound5 = Instance.new("Sound", game.Workspace)
+ sound5.SoundId = "rbxassetid://1841153093"
+ sound5.Volume = 1.6
+ sound5.PlaybackSpeed = 1
+ sound5.Pitch = 0.9
+ sound5.Looped = true
+ sound5:Play()
+ 
+ sky.SkyboxUp = "rbxassetid://12644419296"
+ sky.SkyboxLf = "rbxassetid://12644419296"
+ sky.SkyboxRt = "rbxassetid://12644419296"
+ sky.SkyboxFt = "rbxassetid://12644419296"
+ sky.SkyboxBk = "rbxassetid://12644419296"
+ sky.SkyboxDn = "rbxassetid://12644419296"
+ 
+ col = Instance.new("ColorCorrectionEffect", game.Lighting)
+ col.TintColor = Color3.new(1, 0, 0)
+ col.Saturation = 10000
+ 
+      task.spawn(function()
+        repeat task.wait()
+   local partTweenn2 = game:GetService("TweenService"):Create(col, TweenInfo.new(1.5, Enum.EasingStyle.Sine), {
+        Saturation = 0
+    })
+    partTweenn2:Play()
+    partTweenn2.Completed:Wait()
+    
+    local partTweenn2 = game:GetService("TweenService"):Create(col, TweenInfo.new(1.5, Enum.EasingStyle.Sine), {
+        Saturation = 10000
+    })
+    partTweenn2:Play()
+    partTweenn2.Completed:Wait()
+        until check3 == false
+      end)
+      
+   end)
+end)
+
+for i = 1, 200 do
+  addobj(Vector3.new(math.random(-1024, 1024), 100010, math.random(-2048, 4096)))
+end
